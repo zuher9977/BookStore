@@ -1,0 +1,63 @@
+﻿@model vmHome
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+@section Body{
+    <form method="post">
+        <div class="row" style="margin-left:20px;">
+            <div style="margin-top:10px;">
+                <div class="col-sm-5" style="margin-top:50px;">
+                    <div><label>Category</label></div>
+                    <div>
+                        <select asp-items='new SelectList(Model.categories,"Id","Name")' asp-for="category.Id" class="selectcat form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-5" style="margin-top:50px;">
+                    <div><label>Auhtor</label></div>
+                    <div>
+                        <select asp-items='new SelectList(Model.authors,"Id","FName")' asp-for="author.Id" class="form-control">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2" style="margin-top: 77px;">
+                <input type="submit" value="search" asp-action="search" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="row">
+            @foreach (Book item in Model.books)
+            {
+                <div class="col-sm-4" style="margin-top:50px;">
+                    <div class="thumbnail">
+                        <div class="caption text-center">
+                            <div class="position-relative">
+                                <img src="~/static/@item.ImgPath" style="height: 200px; width: 195px;" />
+                            </div>
+                            <h4 id="thumbnail-label">@item.Title</h4>
+                            <p style="color:white;"><i class="glyphicon glyphicon-user light-red lighter bigger-120"></i>&nbsp;@item.Author_Id</p>
+                            <div class="thumbnail-description smaller">تاريخ النشر : @item.Year</div>
+                        </div>
+                        <div class="caption card-footer text-center">
+                            <ul class="list-inline">
+                                <li style="color:white;"><i class="people lighter"></i>&nbsp;Price : @item.Price</li>
+                                <li></li>
+                                <li style="color:white;"><i class="glyphicon glyphicon-envelope lighter"></i><a href="#">&nbsp;حجز الكتاب</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row" style="margin-top:50px;">
+            <div class="mybottom">
+                <div class="col-xs-6">
+                    <span class="centerspan">مجموع الكتب : @ViewData["bookCount"]</span>
+                </div>
+                <div class="col-xs-6">
+                    <span class="centerspan">مجموع الاعضاء : @ViewData["userCount"]</span>
+                </div>
+            </div>
+        </div>
+    </form>
+}

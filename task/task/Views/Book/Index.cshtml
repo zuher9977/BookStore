@@ -1,0 +1,183 @@
+﻿@model vmBook
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+@section Head {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".edit").click(function () {
+                debugger
+                var CategoryId = $(this).parent().parent().find("#id").text()
+                $.ajax({
+                    type: 'get',
+                    url: '/task/Book/Edit?id=' + CategoryId,
+                    success: function (data) {
+                        debugger
+                        $("#txttitle").val(data.title),
+                            $("#txtid").val(data.id),
+                            $("#txtyear").val(data.year),
+                            $("#txtprice").val(data.price),
+                            $("#cat").val(data.category_Id),
+                            $("#author").val(data.author_Id),
+                            $("#txtstock").val(data.stock)
+                    },
+                    error: function () {
+                        alert("error")
+                    }
+                })
+
+            })
+            $(".edit").click(function () {
+                $("#btnEdit").show()
+                $("#btnSave").hide()
+            })
+            $(".addnew").click(function () {
+                $("#txttitle").val('')
+                $("#txtid").val('')
+                $("#txtyear").val('')
+                $("#txtprice").val('')
+                $("#cat").val('')
+                $("#author").val('')
+                $("#txtstock").val('')
+                $("#btnSave").show()
+                $("#btnEdit").hide()
+            })
+        })
+
+
+
+
+    </script>
+}
+@section Body{
+    <form method="post" enctype="multipart/form-data">
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-6">
+                <button type="button" class="addnew btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Add a New Category
+                </button>
+            </div>
+        </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="color:black;">Modal Add a New Nationality</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Book Title</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" id="txttitle" class="form-control" placeholder="Type Here..." asp-for="book.Title" />
+                                    <input type="hidden" id="txtid" asp-for="book.Id" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Years of Publication</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" id="txtyear" class="form-control" placeholder="Type Here..." asp-for="book.Year" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Price</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" id="txtprice" class="form-control" placeholder="Type Here..." asp-for="book.Price" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Category</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <select asp-items='new SelectList(Model.licategory,"Id","Name")' id="cat" asp-for="book.Category_Id" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Author</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <select asp-items='new SelectList(Model.liauthor,"Id","FName")' id="author" asp-for="book.Author_Id" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Stock</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" id="txtstock" class="form-control" placeholder="Type Here..." asp-for="book.Stock" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="file" asp-for="book.Image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="btnSave">
+                        <button type="button" class="btn btn-secondary" style="color:black;" data-dismiss="modal">Close</button>
+                        <button type="submit" asp-action="addBook" class="btn btn-primary">Save</button>
+                    </div>
+
+                    <div class="modal-footer" id="btnEdit" style="display: none;">
+                        <button type="button" class="btn btn-secondary" style="color:black;" data-dismiss="modal">Close</button>
+                        <button type="submit" asp-action="editBook" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-12">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Book Title</th>
+                            <th>Year</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Img</th>
+                            <th>Stock</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    @foreach (Book item in Model.libook)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span id="id">@item.Id</span>
+                                </td>
+                                <td>@item.Title</td>
+                                <td>@item.Year</td>
+                                <td>@item.Price</td>
+                                <td>@item.Ctg.Name</td>
+                                <td>@item.Author_Id</td>
+                                <td> <img src="~/static/@item.ImgPath" style="width:50px;" /> </td>
+                                <td>@item.Stock</td>
+                                <td>
+                                    <input type="button" value="edit" class="edit" data-toggle="modal" data-target="#exampleModalCenter" />
+                                    <input type="submit" value="delete" asp-route-id="@item.Id" asp-action="delete" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </form>
+}

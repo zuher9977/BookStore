@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>BookStore System</title>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/jquery-3.6.0.min.js"></script>
+    @RenderSection("Head", false)
+</head>
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Book Store System.</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-controller="Account" asp-action="Index">Create Account</a><span class="hover"></span></li>
+                        <li><a asp-controller="Home" asp-action="Index">Home</a><span class="hover"></span></li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Role & User Controller <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a asp-controller="Account" asp-action="AddRole">Add New Role</a><span class="hover"></span></li>
+                                        <li class="divider"></li>
+                                        <li><a asp-controller="Account" asp-action="UserSearch">Users</a><span class="hover"></span></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Library Controller <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a asp-controller="Nationality" asp-action="Index">Nationality</a><span class="hover"></span></li>
+                                        <li class="divider"></li>
+                                        <li><a asp-controller="Category" asp-action="Index">Categories</a><span class="hover"></span></li>
+                                        <li class="divider"></li>
+                                        <li><a asp-controller="Auther" asp-action="Index">Authors</a><span class="hover"></span></li>
+                                        <li class="divider"></li>
+                                        <li><a asp-controller="Book" asp-action="Index">Books</a><span class="hover"></span></li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav" style="float:right">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li><a style="color:white">@User.Identity.Name</a></li>
+                            <li><a asp-controller="Account" asp-action="Logout" class="glyphicon glyphicon-log-out"> Logout</a><span class="hover"></span></li>
+                        }
+                        else
+                        {
+                            <li><a asp-controller="Account" asp-action="Login" class="glyphicon glyphicon-log-in"> SignIn</a><span class="hover"></span></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container p-3 my-3">
+            <div class="col-xs-12" style="margin-top:50px;">
+                <div class="DivMain">
+                    @RenderSection("Body")
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

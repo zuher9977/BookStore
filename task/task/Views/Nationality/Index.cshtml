@@ -1,0 +1,76 @@
+﻿@model vmNationality
+
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+
+@section Body{
+
+
+
+    <div class="row" style="margin-top:30px;">
+        <div class="col-xs-6">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Add a New Nationality
+            </button>
+        </div>
+    </div>
+
+    <form method="post">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="color:black;">Modal Add a New Nationality</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <label style="color:black;" class="control-label">Nationality Name</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" asp-for="nationality.Name" class="form-control" placeholder="Type Here..." />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" style="color:black;" data-dismiss="modal">Close</button>
+                        <button type="submit" asp-action="AddNat" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-12">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    @foreach (Nationality item in Model.ListNationalities)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    <input type="submit" value="delete" asp-route-id="@item.Id" asp-action="delete" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </form>
+}

@@ -1,0 +1,46 @@
+﻿@model List<ApplicationUser>
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+@section Body{
+    <form method="post">
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-2">
+                <label class="control-label">Name Of User</label>
+            </div>
+            <div class="col-xs-6">
+                <input type="text" class="form-control" name="NameOfUser" />
+            </div>
+            <div class="col-xs-4">
+                <input type="submit" value="Search" class="btn btn-primary" asp-action="Searching" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-12">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    @foreach(var item in Model)
+                {
+                <tbody>
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <a asp-action="AddRoleToUser" asp-route-id="@item.Id" asp-route-Name="@item.Name">Add Role</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+                }
+                </table>
+            </div>
+        </div>
+    </form>
+}

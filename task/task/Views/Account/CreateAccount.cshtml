@@ -1,0 +1,57 @@
+﻿@model task.Models.CreateAccountModel
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+@section Body{
+    <form method="post">
+        <div class="container" style="margin-top:100px">
+            <div class="thumbnail">
+                <div class="row" style="padding-top:20px;">
+                    <div class="col-xs-offset-3 col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label">Name</label>
+                            <input type="text" asp-for="Name" class="form-control" placeholder="Your Name" />
+                            <input type="hidden" asp-for="Id" />
+                            <span asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-offset-3 col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <input type="text" asp-for="Email" class="form-control" placeholder="example@example.com" />
+                            <span asp-validation-for="Email"></span>
+                        </div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-xs-offset-3 col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">Password</label>
+                                <input asp-for="Password" class="form-control" placeholder="*********" />
+                                <span asp-validation-for="Password"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-offset-3 col-xs-6">
+                            <div class="form-group">
+                                <label class="control-label">Confirm Password</label>
+                                <input asp-for="ConfirmPassword" class="form-control" placeholder="*********" />
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-xs-offset-3 col-xs-6">
+                                <div class="form-group">
+                                    <input type="submit" value="create account" class="btn btn-primary" asp-action="CreateAccount" />
+                                </div>
+                            </div>
+                        </div>
+         
+                </div>
+        </div>
+</form>
+}

@@ -1,0 +1,44 @@
+﻿@model task.Models.AddRoleModel
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+@section Body{
+    <form method="post">
+        <div class="container" style="margin-top:30px">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.li)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@item.Name</td>
+                                </tr>
+                            </tbody>
+                        }
+
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="margin-top:30px;">
+                <div class="col-xs-2">
+                    <label class="control-label">Role Name</label>
+                </div>
+                <div class="col-xs-6">
+                    <input type="text" asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+                <div class="col-xs-4">
+                    <input type="submit" value="Add Role" class="btn btn-primary" asp-action="AddingRole" />
+                </div>
+            </div>
+        </div>
+    </form>
+}
